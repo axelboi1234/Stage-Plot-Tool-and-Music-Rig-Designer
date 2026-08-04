@@ -2569,7 +2569,7 @@
 
     // --- Legend ---
     document.getElementById('legend').innerHTML =
-      CAT_ORDER.map(cat => `<span><i class="swatch" style="background:var(--${cat})"></i>${esc(CATS[cat].label)}</span>`).join('') 
+      CAT_ORDER.map(cat => `<span><i class="swatch" style="background:var(--${cat})"></i>${esc(CATS[cat].label)}</span>`).join('')
 
     // --- New Workspace ---
     document.getElementById('newBtn').addEventListener('click', async () => {
@@ -2750,9 +2750,11 @@
         return true;
       }
 
-      // Not premium — reset the button back to its default state. Without this,
-      // the button stays stuck on "Premium Active" from a previous account/session
-      // even after switching to a non-premium account.
+      // Not premium — reset the button, but the label depends on whether
+      // this user has already used their trial. First-timers see the free
+      // offer; anyone who's already been through a trial (and had it
+      // auto-cancelled when it ended with no card on file) sees a plain
+      // paid option instead — no free ride twice.
       if (upgradeBtn) {
         upgradeBtn.textContent = (data && data.free_trial_used) ? "Buy Premium" : "Try Premium (Free)";
         upgradeBtn.style.opacity = "";
@@ -3227,6 +3229,22 @@
       setStatus('Loaded shared setup "' + (data.name || 'Untitled setup') + '".');
     })();
 
+    //Returning from Stripe checkout
+    (async function acknowledgeCheckoutReturn() {
+      const checkoutResult = new URLSearchParams(location.search).get('checkout');
+      if (!checkoutResult) return;
+
+      history.replaceState(null, '', location.pathname); // strip ?checkout=... from the URL
+
+      if (checkoutResult === 'success') {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (user) await checkPremiumStatus(user);
+        Dialog.alert("You're all set — premium features are unlocked.", { kicker: 'ACCOUNT', title: 'Welcome to Premium', accent: 'daw' });
+      } else if (checkoutResult === 'cancelled') {
+        Dialog.alert('No charge was made — checkout was cancelled.', { kicker: 'ACCOUNT', title: 'Checkout cancelled' });
+      }
+    })();
+
     //PAYWALL CHECK TRIGGER LINK
     document.getElementById('btn-save-cloud').addEventListener('click', async () => {
       const name = document.getElementById('setupName').value.trim() || 'Untitled setup';
@@ -3243,12 +3261,13 @@
       goToCheckout(user);
     });
 
-    // === Stage Plot (premium feature) ===================================
-    // A separate, self-contained popup for planning physical stage layout —
-    // where people/mics/monitors/amps stand — as opposed to the signal-flow
-    // canvas behind it. Deliberately kept independent of `state`/`nodes` so
-    // it works whether or not a signal chain has been built yet.
-    // All units are metric (meters).
+    // Stage Plot (premium feature)
+    /* 
+    A separate, self-contained popup for planning physical stage layout —
+    where people/mics/monitors/amps stand — as opposed to the signal-flow
+    canvas behind it. Deliberately kept independent of `state`/`nodes` so
+    it works whether or not a signal chain has been built yet.
+    */
 
     const STAGE_ICONS = {
       vocalmic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9.5" y="2.5" width="5" height="8" rx="2.5"/><path d="M7 9.5a5 5 0 0 0 10 0"/><line x1="12" y1="14.5" x2="12" y2="18"/><line x1="8.5" y1="21" x2="15.5" y2="21"/></svg>`,
