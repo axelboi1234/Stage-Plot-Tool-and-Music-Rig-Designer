@@ -2513,7 +2513,7 @@
     buildSidebar();
 
     //Clicking an item on the sidebar places it on the canvas:
-    
+
     document.getElementById('paletteRoot').addEventListener('click', (e) => {
       const btn = e.target.closest('.palette-item');
       if (!btn) return;
@@ -2522,10 +2522,10 @@
       //The position at which to place it:
       const x = 0;
       const y = 0;
-      
+
       if (g) { addNode(g, { x, y }); render(); }
     });
-    
+
 
     // Drag a palette item onto the canvas to drop it exactly where the cursor lands
     document.getElementById('paletteRoot').addEventListener('dragstart', (e) => {
@@ -2569,9 +2569,7 @@
 
     // --- Legend ---
     document.getElementById('legend').innerHTML =
-      CAT_ORDER.map(cat => `<span><i class="swatch" style="background:var(--${cat})"></i>${esc(CATS[cat].label)}</span>`).join('') +
-      `<span><i class="swatch midi" style="background:var(--midi)"></i>MIDI</span>` +
-      `<span><i class="swatch control" style="background:var(--accessory)"></i>Control</span>`;
+      CAT_ORDER.map(cat => `<span><i class="swatch" style="background:var(--${cat})"></i>${esc(CATS[cat].label)}</span>`).join('') 
 
     // --- New Workspace ---
     document.getElementById('newBtn').addEventListener('click', async () => {
@@ -2703,9 +2701,14 @@
       const { data, error } = await supabaseClient.auth.signUp({ email, password });
       if (error) {
         await Dialog.alert(error.message, { kicker: 'ERROR', title: 'Sign-up failed', accent: 'danger' });
-      } else {
+      }
+
+      //email verification popup
+      /*
+      else {
         await Dialog.alert('We sent a verification link to confirm your account (if email confirmation is enabled).', { kicker: 'ACCOUNT', title: 'Check your email' });
       }
+      */
     }
 
     async function userLogIn(email, password) {
@@ -2751,7 +2754,7 @@
       // the button stays stuck on "Premium Active" from a previous account/session
       // even after switching to a non-premium account.
       if (upgradeBtn) {
-        upgradeBtn.textContent = "Go Premium";
+        upgradeBtn.textContent = (data && data.free_trial_used) ? "Buy Premium" : "Try Premium (Free)";
         upgradeBtn.style.opacity = "";
         upgradeBtn.style.pointerEvents = "";
       }
@@ -2764,10 +2767,34 @@
     // user id via client_reference_id. The webhook (see Edge Function) reads this
     // back off the completed session to know whose profiles.is_premium to flip on.
     const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/cNi28sbl2bUY2hSemE3Nm00";
-    function goToCheckout(user) {
-      const url = new URL(STRIPE_PAYMENT_LINK);
-      if (user && user.id) url.searchParams.set('client_reference_id', user.id);
-      window.location.href = url.toString();
+    async function goToCheckout(user) {
+      try {
+        const { data, error } = await supabaseClient.functions.invoke(
+          "create-checkout-session",
+          { method: "POST" }
+        );
+
+        if (error) {
+          console.error("Supabase Function Error:", error);
+          await Dialog.alert(error.message || 'Function invocation failed', { kicker: 'ERROR', title: 'Checkout error', accent: 'danger' });
+          return;
+        }
+
+        if (data && data.error) {
+          console.error("Backend Error:", data.error);
+          await Dialog.alert(data.error, { kicker: 'ERROR', title: 'Checkout error', accent: 'danger' });
+          return;
+        }
+
+        if (data && data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error("No checkout URL was returned by the server.");
+        }
+      } catch (err) {
+        console.error("Failed to start checkout:", err);
+        await Dialog.alert(err.message || "We couldn't start the checkout process.", { kicker: 'ERROR', title: 'Checkout error', accent: 'danger' });
+      }
     }
 
     //BACKEND LISTENERS FOR STATE MANAGEMENT
@@ -2829,7 +2856,7 @@
       // See if a rig with this name already exists for this user, so re-saving
       // overwrites it instead of piling up duplicate rows every click.
       const { data: existing, error: findError } = await supabaseClient
-        .from('Rigs')
+        .from('rigs')
         .select('id')
         .eq('user_id', user.id)
         .eq('name', rigName)
@@ -2845,11 +2872,11 @@
       if (existing) {
         const ok = await Dialog.confirm(`A saved rig named "${rigName}" already exists. Overwrite it?`, { title: 'Overwrite existing save?', okText: 'Overwrite' });
         if (!ok) return false;
-        const { error } = await supabaseClient.from('Rigs').update({ data: rigDataStructure }).eq('id', existing.id);
+        const { error } = await supabaseClient.from('rigs').update({ data: rigDataStructure }).eq('id', existing.id);
         saveError = error;
       } else {
         const { error } = await supabaseClient
-          .from('Rigs')
+          .from('rigs')
           .insert([
             {
               user_id: user.id,
@@ -2876,7 +2903,7 @@
       if (!user) return { rigs: [], error: null };
 
       const { data: owned, error } = await supabaseClient
-        .from('Rigs')
+        .from('rigs')
         .select('*')
         .eq('user_id', user.id); // Rigs this user created
 
@@ -2896,7 +2923,7 @@
 
       if (shares && shares.length) {
         const { data: sharedData } = await supabaseClient
-          .from('Rigs')
+          .from('rigs')
           .select('*')
           .in('id', shares.map(s => s.rig_id));
         sharedRigs = sharedData || [];
@@ -3011,7 +3038,7 @@
       async function removeRig(id) {
         const ok = await Dialog.confirm('This will permanently delete this saved rig from the cloud.', { title: 'Delete this rig?', okText: 'Delete' });
         if (!ok) return;
-        const { error } = await supabaseClient.from('Rigs').delete().eq('id', id);
+        const { error } = await supabaseClient.from('rigs').delete().eq('id', id);
         if (error) {
           await Dialog.alert('Could not delete: ' + error.message, { kicker: 'ERROR', title: 'Delete failed', accent: 'danger' });
           return;
@@ -3102,7 +3129,7 @@
 
       async function togglePublic() {
         const next = !currentRig.is_public;
-        const { error } = await supabaseClient.from('Rigs').update({ is_public: next }).eq('id', currentRig.id);
+        const { error } = await supabaseClient.from('rigs').update({ is_public: next }).eq('id', currentRig.id);
         if (error) {
           await Dialog.alert('Could not update: ' + error.message, { kicker: 'ERROR', title: 'Update failed', accent: 'danger' });
           return;
@@ -3184,7 +3211,7 @@
       if (!rigId) return;
 
       const { data, error } = await supabaseClient
-        .from('Rigs')
+        .from('rigs')
         .select('name, data')
         .eq('id', rigId)
         .maybeSingle();
