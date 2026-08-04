@@ -1865,12 +1865,8 @@
       Dialog.welcome({
         title: 'Welcome to Setup Schematicizer',
         html: `
-          <!-- ============================================================ -->
-          <!--  ✏️  EDIT YOUR WELCOME TEXT HERE — everything between these  -->
-          <!--      two comment lines is what shows up in the popup.       -->
-          <!--      Use plain HTML: <p> for paragraphs, <b> for bold,      -->
-          <!--      <ul><li> for bullet lists, <br> for line breaks, etc.  -->
-          <!-- ============================================================ -->
+          <!-- Welcome text -->
+
           <p>- Drag modules by their colored top bars. </p>
           <p>- Drag from jack-to-jack to connect. </p>
           <p>- Click on a cable to name or delete it.  </p>
@@ -1879,9 +1875,7 @@
           <p></p>
           <p>For support, raise an issue <a href="https://github.com/axelboi1234/Setup-Schematicizer">here</a></p>
           <p>This information is accessable from the bottom of the sidebar</p>
-          <!-- ============================================================ -->
-          <!--  END EDITABLE TEXT                                          -->
-          <!-- ============================================================ -->
+          
         `
       });
     })();
@@ -1898,7 +1892,7 @@
       monitor: { label: 'Amp / Monitor' }, other: { label: 'Other (custom)' }
     };
     const CAT_ORDER = ['instrument', 'effect', 'looper', 'accessory', 'mixer', 'interface', 'daw', 'monitor', 'other'];
-    const ADJUSTABLE_CATS = ['mixer', 'daw', 'other'];
+    const ADJUSTABLE_CATS = ['daw', 'other'];
     const NAME_EDITABLE_CATS = ['other'];
 
     //Specify category, label, then ins/outs (in/out name, then type: 'midi', 'audio', or 'control')
@@ -1928,10 +1922,11 @@
       { cat: 'accessory', label: 'Boss FS-5U Footswitch', inPorts: [], outPorts: [['', 'control']] },
       { cat: 'accessory', label: 'Expression pedal (EV-5)', inPorts: [], outPorts: [['', 'control']] },
 
-      { cat: 'mixer', label: 'Generic mixer', inPorts: [['1', 'audio'], ['2', 'audio'], ['3', 'audio'], ['4', 'audio'], ['5', 'audio'], ['6', 'audio']], outPorts: [['Main L', 'audio'], ['Main R', 'audio']] },
+      { cat: 'mixer', label: 'Custom Mixer', adjustable: true, inPorts: [['1', 'audio'], ['2', 'audio'], ['3', 'audio'], ['4', 'audio'], ['5', 'audio'], ['6', 'audio']], outPorts: [['Main L', 'audio'], ['Main R', 'audio']] },
       { cat: 'mixer', label: 'Behringer Xenyx 1002B', inPorts: [['1', 'audio'], ['2', 'audio'], ['3', 'audio'], ['4', 'audio'], ['5', 'audio'], ['6', 'audio'], ['7', 'audio'], ['8', 'audio'], ['9', 'audio'], ['10', 'audio']], outPorts: [['Main L', 'audio'], ['Main R', 'audio']] },
       { cat: 'mixer', label: 'Behringer Xenyx X1204USB', inPorts: [['1', 'audio'], ['2', 'audio'], ['3', 'audio'], ['4', 'audio'], ['5', 'audio'], ['6', 'audio'], ['7', 'audio'], ['8', 'audio'], ['9', 'audio'], ['10', 'audio'], ['11', 'audio'], ['12', 'audio']], outPorts: [['Main L', 'audio'], ['Main R', 'audio'], ['USB', 'audio']] },
 
+      { cat: 'interface', label: 'Custom Interface', adjustable: true, inPorts: [['1', 'audio'], ['2', 'audio']], outPorts: [['Main L', 'audio'], ['Main R', 'audio']] },
       { cat: 'interface', label: 'Focusrite Scarlett Solo', inPorts: [['', 'audio']], outPorts: [['L', 'audio'], ['R', 'audio']] },
       { cat: 'interface', label: 'Focusrite Scarlett 2i2', inPorts: [['L', 'audio'], ['R', 'audio']], outPorts: [['L', 'audio'], ['R', 'audio']] },
       { cat: 'interface', label: 'Focusrite Scarlett 4i4', inPorts: [['1', 'audio'], ['2', 'audio'], ['3', 'audio'], ['4', 'audio'], ['MIDI', 'midi']], outPorts: [['1', 'audio'], ['2', 'audio'], ['3', 'audio'], ['4', 'audio'], ['MIDI', 'midi']] },
@@ -1941,11 +1936,11 @@
 
       { cat: 'daw', label: 'Computer / DAW', inPorts: [['L', 'audio'], ['R', 'audio'], ['MIDI', 'midi']], outPorts: [['L', 'audio'], ['R', 'audio'], ['MIDI', 'midi']] },
 
-      { cat: 'monitor', label: 'Studio monitors (pair)', inPorts: [['L', 'audio'], ['R', 'audio']], outPorts: [] },
-      { cat: 'monitor', label: 'Guitar amp', inPorts: [['', 'audio']], outPorts: [] },
+      { cat: 'monitor', label: 'Studio Monitors (pair)', inPorts: [['L', 'audio'], ['R', 'audio']], outPorts: [] },
+      { cat: 'monitor', label: 'Guitar Amp', inPorts: [['', 'audio']], outPorts: [] },
       { cat: 'monitor', label: 'Headphones', inPorts: [['', 'audio']], outPorts: [] },
 
-      { cat: 'other', label: 'Custom device', inPorts: [['', 'audio']], outPorts: [['', 'audio']] },
+      { cat: 'other', label: 'Custom Device', inPorts: [['', 'audio']], outPorts: [['', 'audio']] },
     ];
 
     const GUITAR_SVG = `<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5"><circle cx="17" cy="17" r="4.5" /><circle cx="13" cy="13" r="3.2" /><circle cx="14.5" cy="14.5" r="1.2" fill="white" stroke="none" /><line x1="11" y1="11" x2="5" y2="5" stroke-width="1.5" /><rect x="2.5" y="2.5" width="3" height="3" rx="0.5" transform="rotate(-45 4 4)" /><line x1="16" y1="19" x2="19" y2="16" stroke-width="1" /></svg>`;
@@ -2033,7 +2028,7 @@
     function nodeRows(n) { return Math.max(1, n.inPorts.length, n.outPorts.length); }
     function headerHeightOf(n) {
       let h = 66;
-      if (ADJUSTABLE_CATS.includes(n.cat)) h += 28;
+      if (n.adjustable) h += 28;
       if (n.cat === 'other') h += 24;
       if (n.cat === 'daw') { h += 16 + n.inPorts.length * 20 + n.outPorts.length * 36; }
       return h;
@@ -2054,9 +2049,11 @@
     function addNode(gearDef, posOverride) {
       const id = 'n' + (idCounter++);
       const pos = posOverride || nextPosition();
+      const adjustable = gearDef.adjustable === true || ADJUSTABLE_CATS.includes(gearDef.cat);
       state.nodes.push({
         id, cat: gearDef.cat, label: gearDef.label, sub: '', x: pos.x, y: pos.y,
         inPorts: clonePorts(gearDef.inPorts, false), outPorts: clonePorts(gearDef.outPorts, true),
+        adjustable,
         nextInType: 'audio', nextOutType: 'audio'
       });
       return id;
@@ -2070,7 +2067,7 @@
 
     function stepCount(nodeId, io, delta) {
       const n = state.nodes.find(n => n.id === nodeId); if (!n) return;
-      if (!ADJUSTABLE_CATS.includes(n.cat)) return;
+      if (!n.adjustable) return;
       const arr = io === 'in' ? n.inPorts : n.outPorts;
       if (delta > 0) {
         if (arr.length >= 24) return;
@@ -2141,7 +2138,8 @@
       canvas.querySelectorAll('.node').forEach(el => el.remove());
       state.nodes.forEach(n => {
         const h = nodeHeightOf(n);
-        const adjustable = ADJUSTABLE_CATS.includes(n.cat);
+        const adjustable = n.adjustable;
+
         const showTypePick = n.cat === 'other';
         const nameEditable = NAME_EDITABLE_CATS.includes(n.cat);
         const isDaw = n.cat === 'daw';
@@ -2514,12 +2512,20 @@
     }
     buildSidebar();
 
+    //Clicking an item on the sidebar places it on the canvas:
+    
     document.getElementById('paletteRoot').addEventListener('click', (e) => {
       const btn = e.target.closest('.palette-item');
       if (!btn) return;
       const g = GEAR[parseInt(btn.dataset.idx, 10)];
-      if (g) { addNode(g); render(); }
+
+      //The position at which to place it:
+      const x = 0;
+      const y = 0;
+      
+      if (g) { addNode(g, { x, y }); render(); }
     });
+    
 
     // Drag a palette item onto the canvas to drop it exactly where the cursor lands
     document.getElementById('paletteRoot').addEventListener('dragstart', (e) => {
@@ -2614,7 +2620,10 @@
         Dialog.alert("That data doesn't have the nodes/connections this app expects.", { kicker: 'ERROR', title: 'Load failed', accent: 'danger' });
         return false;
       }
-      state.nodes = parsed.nodes;
+      state.nodes = parsed.nodes.map(n => ({
+        ...n,
+        adjustable: typeof n.adjustable === 'boolean' ? n.adjustable : ADJUSTABLE_CATS.includes(n.cat)
+      }));
       state.connections = parsed.connections;
       idCounter = parsed.idCounter || (state.nodes.reduce((m, n) => Math.max(m, parseInt(n.id.slice(1)) || 0), 0) + 1);
       zoom = parsed.zoom || 1.0;
@@ -2644,9 +2653,8 @@
       e.target.value = ''; // reset file input element
     });
 
-    /*
-
     // --- Initial Starter Rig Setup Blueprint ---
+    /*
     (function starter() {
       const find = (label) => GEAR.find(g => g.label === label);
       const g = addNode(find('Electric guitar'));
@@ -2679,8 +2687,8 @@
       if (dawNode && dawNode.outPorts[1]) dawNode.outPorts[1].source = 1;
       render();
     })();
-
     */
+
   </script>
 
   <script>
@@ -2709,7 +2717,7 @@
       }
     }
 
-    // 4. AUTOMATED PREMIUM VERIFICATION SYSTEM
+    //AUTOMATED PREMIUM VERIFICATION SYSTEM
     async function checkPremiumStatus(user) {
       console.log("Checking premium status for user ID:", user.id);
 
@@ -2730,10 +2738,9 @@
       const upgradeBtn = document.getElementById('btn-upgrade');
 
       // Check if data exists AND if the premium column is true
-      // Note: If you named your column 'has_premium' instead of 'is_premium', change it here:
-      if (data && (data.is_premium === true || data.has_premium === true)) {
+      if (data && (data.is_premium === true)) {
         if (upgradeBtn) {
-          upgradeBtn.textContent = "Premium Active ✨";
+          upgradeBtn.textContent = "Premium Active";
           upgradeBtn.style.opacity = "0.6";
           upgradeBtn.style.pointerEvents = "none";
         }
@@ -2744,7 +2751,7 @@
       // the button stays stuck on "Premium Active" from a previous account/session
       // even after switching to a non-premium account.
       if (upgradeBtn) {
-        upgradeBtn.textContent = "✨ Go Premium";
+        upgradeBtn.textContent = "Go Premium";
         upgradeBtn.style.opacity = "";
         upgradeBtn.style.pointerEvents = "";
       }
@@ -2763,7 +2770,7 @@
       window.location.href = url.toString();
     }
 
-    // 5. BACKEND LISTENERS FOR STATE MANAGEMENT
+    //BACKEND LISTENERS FOR STATE MANAGEMENT
     supabaseClient.auth.onAuthStateChange((event, session) => {
       const loggedOutElements = document.querySelectorAll('.auth-out');
       const loggedInElements = document.querySelectorAll('.auth-in');
