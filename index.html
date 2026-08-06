@@ -29,12 +29,17 @@
       --accessory: #d9c25a;
       --mixer: #9b7fd1;
       --interface: #5b93c9;
-      --daw: #7fae5c;
+      --daw: #7fbe4f;
       --monitor: #c96b8a;
       --other: #8a8880;
       --midi: #5fc9d9;
       --danger: #c9615f;
       font-family: 'Inter', sans-serif;
+    }
+
+    /*Colours for links*/
+    a {
+      color: var(--instrument);
     }
 
     * {
@@ -64,23 +69,17 @@
 
     /*Topbar*/
     .topbar {
+      background-color: var(--panel);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+      flex-direction: column;
       width: 100%;
-      padding: 10px 20px;
+      padding: 5px;
       box-sizing: border-box;
-      background: var(--panel);
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-      row-gap: 10px;
-      z-index: 10;
     }
 
     .topbar h1 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       letter-spacing: .04em;
       text-transform: uppercase;
@@ -88,33 +87,45 @@
       margin: 0;
     }
 
-    .tb-left {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      min-width: 0;
-    }
-
-    .tb-brand {
+    .tb-logo {
       display: flex;
       align-items: baseline;
-      gap: 8px;
+      padding: 5px 10px;
+      padding-right: 6px;
+
       white-space: nowrap;
     }
 
+    /*Left and right sections of the topbar*/
+    .tb-left,
     .tb-right {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      row-gap: 8px;
-      justify-content: flex-end;
+      /*Space between logo, helpBtn, and button groups*/
+      gap: 12px;
+      flex-wrap: nowrap;
     }
 
+    /*Top and bottom rows of the topbar*/
+    .tb-tp-row,
+    .tb-btm-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: nowrap;
+      gap: 16px;
+    }
+
+    /*Used to group related elements on the topbar (like file btns, or cloud btns)*/
     .tb-group {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      gap: 6px;
+      /* Space between individual buttons */
+      gap: 5px;
     }
 
     .tb-divider {
@@ -122,6 +133,7 @@
       height: 20px;
       background: var(--border);
       flex: none;
+
     }
 
     .tb-status {
@@ -131,15 +143,9 @@
       white-space: nowrap;
     }
 
-    .tagline {
-      font-size: 11px;
-      color: var(--text-faint);
-    }
-
     /* Unified topbar button — one consistent style/size for every action in the bar */
     .tb-btn {
       display: inline-flex;
-      align-items: center;
       gap: 6px;
       background: var(--panel2);
       border: 1px solid var(--border);
@@ -147,7 +153,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
       font-weight: 500;
-      padding: 7px 13px;
+      padding: 7px 9px;
       border-radius: 5px;
       cursor: pointer;
       white-space: nowrap;
@@ -174,11 +180,15 @@
       color: var(--danger);
     }
 
+    .tb-btn--daw:hover {
+      border-color: var(--daw);
+      color: var(--daw);
+    }
+
     .tb-btn--premium {
-      background: var(--instrument);
-      border-color: var(--instrument);
-      color: #241a08;
-      font-weight: 600;
+      background-color: var(--accessory);
+      border-color: var(--accessory);
+      color: var(--panel);
     }
 
     .tb-btn--premium:hover {
@@ -200,7 +210,7 @@
       color: var(--text);
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
-      padding: 7px 10px;
+      padding: 6px 10px;
       border-radius: 4px;
       width: 190px;
     }
@@ -355,9 +365,10 @@
       border-color: transparent transparent transparent var(--text-dim);
       flex: none;
       display: inline-block;
-      transition: transform .15s;
+      transition: transform .20s;
     }
 
+    /*Rotate the little arrow when a dropdown menu is open*/
     details.cat-group[open] summary::before {
       transform: rotate(90deg);
     }
@@ -1189,7 +1200,7 @@
       line-height: 1;
     }
 
-    /* === Stage Plot (premium feature) === */
+    /* Stage Plot */
     .tb-btn--stage svg {
       color: var(--monitor);
     }
@@ -1239,9 +1250,9 @@
     .stage-topbar {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 5px;
       flex-wrap: wrap;
-      padding: 12px 16px;
+      padding: 5px 5px;
       border-bottom: 1px solid var(--border);
       background: var(--panel);
       flex: none;
@@ -1255,6 +1266,7 @@
       text-transform: uppercase;
       color: var(--text-dim);
       margin: 0;
+      padding: 10px;
     }
 
     .stage-topbar .tb-group {
@@ -1264,13 +1276,13 @@
     }
 
     .stage-dim-input {
-      width: 44px;
+      width: 40px;
       background: var(--panel2);
       border: 1px solid var(--border);
       color: var(--text);
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
-      padding: 6px 5px;
+      padding: 5px 5px;
       border-radius: 4px;
       text-align: center;
     }
@@ -1279,7 +1291,13 @@
       outline: 1px solid var(--monitor);
     }
 
-    .stage-dim-label,
+    .stage-dim-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-faint);
+      padding-left: 10px;
+    }
+
     .stage-dim-x {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -1617,68 +1635,310 @@
 
 <body>
   <div class="app">
-
     <div class="topbar">
 
-      <div class="tb-left">
-        <div class="tb-brand">
-          <h1>Setup Schematicizer</h1>
-          <span class="tagline">· &nbsp;Circuit-Grade Layout Design For Music Rigs</span>
+      <!--The top row of the top bar-->
+      <div class="tb-tp-row">
+        <!--Elements on the left-->
+        <div class="tb-left">
+          <!--Big logo in the top left-->
+          <div class="tb-logo">
+            <h1>Setup Schematicizer</h1>
+          </div>
+
+          <!--Group file buttons-->
+          <div class="tb-group">
+            <button class="tb-btn tb-btn--daw" id="helpBtn">?</button>
+            <input class="name-input" id="setupName" value="Untitled Setup" spellcheck="false">
+            <button class="tb-btn" id="newBtn">Clear</button>
+            <button class="tb-btn auth-in" id="exportBtn" style="display:none;">Export</button>
+            <button class="tb-btn auth-in" id="importBtn" style="display:none;">Import</button>
+          </div>
         </div>
 
-        <div class="tb-group">
-          <input class="name-input" id="setupName" value="Untitled setup" spellcheck="false">
-          <button class="tb-btn" id="newBtn">Clear</button>
-          <button class="tb-btn auth-in" id="exportBtn" style="display:none;">Export</button>
-          <button class="tb-btn auth-in" id="importBtn" style="display:none;">Import</button>
+        <!--Elements on the right-->
+        <div class="tb-right">
+
+          <input type="file" id="fileImporter" accept=".json" style="display:none;">
+
+          <!--Group of account buttons-->
+          <div class="tb-group">
+            <button id="btn-signout" class="tb-btn tb-btn--danger auth-in">Sign Out</button>
+            <button id="btn-signin" class="tb-btn auth-out">Sign In</button>
+            <button id="btn-signup" class="tb-btn tb-btn--primary auth-out">Sign Up</button>
+          </div>
+
         </div>
-        <input type="file" id="fileImporter" accept=".json" style="display:none;">
       </div>
 
-      <div class="tb-right">
-        <div class="tb-group">
-          <button id="btn-signin" class="tb-btn auth-out">Sign In</button>
-          <button id="btn-signup" class="tb-btn tb-btn--primary auth-out">Sign Up</button>
-          <button id="btn-signout" class="tb-btn tb-btn--danger auth-in" style="display:none;">Sign Out</button>
+      <!--The bottom row of the top bar-->
+      <div class="tb-btm-row auth-in" style="margin-top: 5px;">
+        <!--Elements on the left-->
+        <div class="tb-left">
+          <!--Group of cloud buttons (and the stage plot one)-->
+          <div class="tb-group" style="width:216px;">
+            <button id="btn-save-cloud" class="tb-btn tb-btn--cloud auth-in">
+              <!--Save icon-->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                style="width:14px;height:14px;">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                <polyline points="17 21 17 13 7 13 7 21" />
+                <polyline points="7 3 7 8 15 8" />
+              </svg>
+            </button>
+
+            <button id="btn-load-cloud" class="tb-btn tb-btn--cloud auth-in">
+              <!--Cloud icon-->
+              <svg viewBox="0 0 25 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                style="width:14px;height:14px;">
+                <path d="M20.5 15a4.5 4.5 0 0 0 .5-8.5 6 6 0 0 0-11.5-1A4.5 4.5 0 0 0 3.5 15" />
+                <path d="M5 21h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" />
+              </svg>
+            </button>
+
+            <button id="btn-stageplot" class="tb-btn tb-btn--stage auth-in">
+              <!--Stage icon-->
+              <svg width="14px" height="14px" viewBox="0 0 256 256" enable-background="new 0 0 256 256">
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M64.283257,19.978252 
+	C89.720390,15.657748 114.907166,14.016985 140.269714,14.638803 
+	C171.371109,15.401319 201.751190,20.666023 231.714722,28.753460 
+	C235.721313,29.834875 237.457504,32.104458 237.354675,36.289574 
+	C237.174667,43.616928 237.337158,50.952110 237.298294,58.283703 
+	C237.264908,64.582390 235.959579,65.894806 229.751099,66.096138 
+	C223.295441,66.305504 223.288254,66.305504 223.286545,72.883377 
+	C223.282349,89.046707 223.395370,105.211311 223.208923,121.372490 
+	C223.161774,125.460220 224.393829,126.952026 228.587677,126.878777 
+	C234.079346,126.782852 235.315933,128.271255 235.324203,133.744797 
+	C235.360397,157.739807 235.440842,181.735626 235.262054,205.729324 
+	C235.229095,210.152786 236.237518,211.907364 241.056168,211.795654 
+	C252.343719,211.533936 252.352005,211.777756 252.348999,223.037735 
+	C252.347672,228.036667 252.285400,233.036133 252.340286,238.034378 
+	C252.381805,241.813675 250.617218,243.465927 246.843201,243.412170 
+	C240.179337,243.317245 233.513046,243.399765 226.847763,243.399612 
+	C155.862366,243.397995 84.876968,243.396515 13.891567,243.389236 
+	C6.048861,243.388443 5.666770,243.000977 5.653163,235.219666 
+	C5.642966,229.387558 5.708817,223.554855 5.642936,217.723511 
+	C5.595457,213.520996 7.634450,211.796768 11.753685,211.646774 
+	C22.671839,211.249268 22.668804,211.168335 22.669838,200.301926 
+	C22.671917,178.473083 22.661549,156.644226 22.683659,134.815399 
+	C22.690563,127.998032 23.501476,127.029312 30.407417,126.833046 
+	C33.644085,126.741058 34.796547,125.579117 34.780773,122.378700 
+	C34.695377,105.049416 34.692791,87.719131 34.797981,70.390022 
+	C34.818443,67.018646 33.302307,66.191780 30.254845,66.087761 
+	C21.237125,65.779961 20.727528,65.144753 20.729294,56.168880 
+	C20.730442,50.336746 20.718987,44.504608 20.726452,38.672485 
+	C20.736719,30.653303 21.018953,30.247486 28.875401,28.076643 
+	C40.417149,24.887503 52.125004,22.415176 64.283257,19.978252 
+M180.068695,126.935272 
+	C190.063675,126.881691 200.059555,126.732437 210.053131,126.827065 
+	C213.494385,126.859650 214.737015,125.642487 214.712280,122.162445 
+	C214.590225,105.000473 214.582336,87.836555 214.718124,70.674789 
+	C214.746704,67.064125 213.247849,66.058571 209.946060,66.115593 
+	C202.616608,66.242172 195.283157,66.118126 187.951843,66.169868 
+	C186.035904,66.183388 183.605927,65.729469 183.320404,68.644119 
+	C183.066391,71.237068 182.705338,73.683647 185.805008,75.499779 
+	C195.328171,81.079514 196.340500,90.385658 188.562531,98.332260 
+	C185.299255,101.666306 181.943268,104.909569 178.677216,108.240967 
+	C175.839676,111.135284 173.007507,111.468277 170.033554,108.471397 
+	C166.513367,104.924072 163.013336,101.355385 159.432693,97.869789 
+	C156.241180,94.762993 156.479065,91.861725 159.591553,88.869362 
+	C163.793503,84.829590 167.695007,80.440315 172.161804,76.725754 
+	C175.258011,74.150948 175.017059,71.116699 174.324509,68.145584 
+	C173.591293,64.999977 170.482529,66.164482 168.355713,66.158180 
+	C142.195084,66.080612 116.034058,66.070480 89.873535,66.159828 
+	C87.640823,66.167442 84.312103,64.790329 83.591179,68.357376 
+	C82.985695,71.353264 82.863747,74.336395 85.984138,76.872902 
+	C90.487686,80.533745 94.383736,84.939629 98.560600,89.005417 
+	C101.684036,92.045784 101.639313,95.016548 98.539917,98.054131 
+	C94.970268,101.552574 91.480156,105.132317 87.902321,108.622231 
+	C85.141769,111.314949 82.341270,111.271469 79.598824,108.522202 
+	C76.539360,105.455124 73.448143,102.419563 70.401932,99.339439 
+	C61.426991,90.264557 62.163280,82.282303 72.813934,75.255074 
+	C75.607430,73.411942 74.853424,70.944298 74.700859,68.582153 
+	C74.534470,66.005974 72.344696,66.149582 70.532242,66.137589 
+	C62.867630,66.086861 55.201088,66.183365 47.538456,66.046425 
+	C44.181541,65.986435 43.293129,67.529732 43.309032,70.621147 
+	C43.397327,87.783539 43.418324,104.947113 43.294018,122.109062 
+	C43.269085,125.551270 44.408939,126.871010 47.897099,126.807938 
+	C56.392330,126.654327 64.892387,126.755707 73.390457,126.775017 
+	C81.160255,126.792664 82.258583,127.899109 82.260986,135.808502 
+	C82.268059,159.136627 82.357422,182.465622 82.160469,205.792130 
+	C82.122406,210.299896 83.330879,211.825226 88.034302,211.787231 
+	C114.360077,211.574570 140.688461,211.698990 167.015915,211.674011 
+	C176.317917,211.665192 175.739685,212.767761 175.744247,203.196335 
+	C175.755142,180.368073 175.751205,157.539825 175.736511,134.711563 
+	C175.734528,131.639404 175.705490,128.599152 180.068695,126.935272 
+M138.485886,23.283730 
+	C106.035110,22.222137 74.085869,25.895027 42.516140,33.318981 
+	C29.348297,36.415535 29.324707,36.315189 29.330921,49.906521 
+	C29.331150,50.406212 29.401434,50.917652 29.320263,51.403782 
+	C28.450861,56.610569 30.833504,57.767540 35.763535,57.750351 
+	C84.732513,57.579586 133.702332,57.646992 182.671906,57.645859 
+	C195.830399,57.645554 208.993500,57.439999 222.144974,57.742695 
+	C227.050095,57.855595 229.364334,56.628365 228.724792,51.388226 
+	C228.404343,48.762424 228.413437,46.034344 228.727249,43.406719 
+	C229.297424,38.632454 227.601715,36.391575 222.703613,35.154850 
+	C195.364792,28.252047 167.713242,23.798470 138.485886,23.283730 
+M100.500061,220.311905 
+	C73.677307,220.311951 46.854538,220.301743 20.031824,220.335342 
+	C18.260757,220.337555 15.668986,219.561646 14.943925,221.366501 
+	C13.438828,225.113098 13.695038,229.326355 14.662193,233.131973 
+	C15.404321,236.052155 18.645792,234.830902 20.795053,234.832748 
+	C92.266830,234.893799 163.738663,234.889175 235.210495,234.889862 
+	C237.042480,234.889877 238.875458,234.869217 240.706085,234.804657 
+	C241.716751,234.769028 242.997101,234.636688 243.256592,233.598938 
+	C244.236237,229.681564 244.496017,225.543411 243.242798,221.794556 
+	C242.346558,219.113556 239.121735,220.359222 236.946640,220.356216 
+	C191.797836,220.293839 146.648956,220.311020 100.500061,220.311905 
+M184.338516,158.500061 
+	C184.335678,174.635773 184.390472,190.771881 184.281845,206.906891 
+	C184.259872,210.169998 185.053726,211.799103 188.717239,211.745697 
+	C199.856415,211.583267 211.000397,211.596954 222.140259,211.730667 
+	C225.650131,211.772781 226.789841,210.342010 226.778183,206.981628 
+	C226.700928,184.691498 226.701981,162.400848 226.779831,140.110703 
+	C226.791229,136.847229 225.929260,135.251663 222.281265,135.305237 
+	C211.138474,135.468872 199.990295,135.448410 188.847061,135.294540 
+	C185.303665,135.245636 184.187149,136.656662 184.291534,140.035095 
+	C184.471252,145.851685 184.340088,151.677872 184.338516,158.500061 
+M73.478661,209.734497 
+	C73.532837,186.239578 73.551529,162.744461 73.682716,139.249969 
+	C73.700638,136.039459 72.190262,135.319748 69.375916,135.348099 
+	C60.710796,135.435364 52.044132,135.359589 43.378090,135.367630 
+	C31.307364,135.378815 31.295019,135.386734 31.287416,147.604950 
+	C31.275183,167.270172 31.365551,186.936066 31.208324,206.600052 
+	C31.176775,210.545776 32.479897,211.989258 36.403866,211.736694 
+	C40.506783,211.472626 44.639889,211.677719 48.759800,211.677719 
+	C38.966309,208.009811 32.821152,199.784760 33.904503,191.294510 
+	C35.080109,182.081238 41.999454,175.137268 50.472225,174.667847 
+	C59.979053,174.141144 68.159760,179.407303 70.055748,187.548996 
+	C70.850319,190.960968 70.904526,194.573929 70.036530,197.970016 
+	C69.116150,201.570999 66.936775,204.524872 64.071945,207.006821 
+	C61.528538,209.210297 58.456253,210.290161 54.268593,211.564758 
+	C57.490147,211.564758 59.492817,211.666458 61.481537,211.543152 
+	C65.371704,211.301910 69.427246,212.844070 73.478661,209.734497 
+M61.732254,194.940552 
+	C61.752968,193.618530 61.999622,192.252731 61.753418,190.982437 
+	C60.903160,186.595566 58.210552,183.934128 53.744656,183.334229 
+	C49.072193,182.706589 45.656452,184.724640 43.532269,188.821365 
+	C41.420120,192.894928 42.355118,196.616211 45.530140,199.692993 
+	C50.949814,204.944992 57.632317,203.237396 61.732254,194.940552 
+M89.105530,95.069763 
+	C90.342247,93.876915 90.101410,92.747612 88.972252,91.640816 
+	C86.481216,89.199074 84.045074,86.698769 81.494072,84.321594 
+	C79.409828,82.379372 77.073738,81.948280 74.846954,84.069016 
+	C72.518684,86.286400 72.703781,88.846336 74.524002,91.224640 
+	C75.725548,92.794601 77.264183,94.110016 78.676765,95.514389 
+	C83.744873,100.553032 83.748878,100.549004 89.105530,95.069763 
+M169.792953,95.966103 
+	C171.673569,97.136330 172.715729,100.989418 175.702881,98.656914 
+	C178.792175,96.244644 181.680069,93.372063 183.980194,90.209305 
+	C186.208435,87.145409 183.939804,83.039452 180.414230,82.849121 
+	C177.622559,82.698402 168.200256,91.175812 168.200165,93.964043 
+	C168.200150,94.484619 168.935562,95.005219 169.792953,95.966103 
+z" />
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M119.259583,51.374046 
+	C114.404419,54.876251 109.647896,55.190495 105.111732,51.910374 
+	C101.402390,49.228130 99.527748,45.369507 100.295914,40.661140 
+	C101.148819,35.433380 104.533813,31.916950 109.653076,30.958309 
+	C114.296776,30.088724 118.171265,31.622349 121.047668,35.365166 
+	C124.069038,39.296612 124.186584,44.452087 121.448723,48.844273 
+	C120.930023,49.676403 120.201553,50.377777 119.259583,51.374046 
+M110.998154,39.605118 
+	C108.608231,40.937241 107.959480,42.640442 110.139801,44.666935 
+	C111.498962,45.930206 113.024628,45.627178 113.918694,44.115978 
+	C115.413048,41.590183 114.303207,40.098640 110.998154,39.605118 
+z" />
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M83.147293,52.452339 
+	C76.264687,55.411892 70.562683,53.814682 67.367172,48.315338 
+	C64.218185,42.896053 65.571953,36.430996 70.597137,32.890369 
+	C75.457237,29.466053 81.846405,30.170706 85.934029,34.581852 
+	C90.865242,39.903351 89.908348,46.814865 83.147293,52.452339 
+M79.097046,44.574490 
+	C80.482979,43.198975 80.881104,41.779114 79.263290,40.293385 
+	C78.299805,39.408566 77.211609,39.195328 76.068604,39.894032 
+	C74.816490,40.659439 74.045174,41.792934 74.645119,43.243458 
+	C75.354210,44.957870 76.563705,45.994965 79.097046,44.574490 
+z" />
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M157.418259,39.836277 
+	C159.317856,46.209164 154.602615,52.722256 147.761444,54.061768 
+	C142.404480,55.110661 136.445435,50.950703 135.012421,45.250969 
+	C133.435303,38.977970 136.806641,33.134155 143.088257,31.252476 
+	C149.287949,29.395340 154.746002,32.532669 157.418259,39.836277 
+M148.069260,44.224724 
+	C149.277328,42.180466 149.261627,40.266415 146.677750,39.644157 
+	C144.815659,39.195721 143.370499,40.599648 143.535324,42.451710 
+	C143.739807,44.749302 145.080078,46.049892 148.069260,44.224724 
+z" />
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M170.079041,37.494911 
+	C174.459854,31.339659 178.754807,29.575762 184.216400,31.401014 
+	C189.228149,33.075932 192.249237,37.133015 192.281998,42.232471 
+	C192.316071,47.533985 188.834381,52.136925 183.579376,53.753551 
+	C179.270386,55.079151 175.595627,53.656792 172.610733,50.704140 
+	C168.983185,47.115795 168.026550,42.720009 170.079041,37.494911 
+M179.327362,39.804741 
+	C177.855820,40.887287 176.961685,42.143261 178.273148,43.911915 
+	C179.087830,45.010593 180.062592,45.900600 181.580627,45.170818 
+	C182.665726,44.649170 183.570206,43.842125 183.508286,42.568855 
+	C183.401672,40.376186 182.101868,39.395802 179.327362,39.804741 
+z" />
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M216.570099,207.767365 
+	C207.556519,212.703796 199.966202,212.276215 193.579803,206.700790 
+	C187.895172,201.737991 185.583969,193.065460 188.406982,186.179413 
+	C191.068939,179.686264 195.945343,175.592194 202.993073,174.758362 
+	C210.517349,173.868149 216.926956,176.219131 221.030746,182.894257 
+	C224.893005,189.176575 225.274475,195.750458 221.364716,202.250427 
+	C220.165405,204.244293 218.836060,206.177811 216.570099,207.767365 
+M211.215759,200.846054 
+	C216.674210,195.398560 217.054825,190.260117 212.330200,185.800705 
+	C208.204376,181.906464 201.936249,182.253845 198.148117,186.586655 
+	C195.454498,189.667542 195.245193,195.235428 197.695038,198.638580 
+	C200.543167,202.594986 204.945374,203.489273 211.215759,200.846054 
+z" />
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M204.302124,140.902893 
+	C213.087738,141.502975 218.155075,145.377762 219.247849,151.963577 
+	C220.416809,159.008514 217.525879,164.861099 211.491714,167.665619 
+	C204.460251,170.933640 196.278564,167.914032 193.010406,160.844757 
+	C189.672852,153.625366 192.504837,145.698212 199.660248,142.403625 
+	C201.007416,141.783325 202.478729,141.432678 204.302124,140.902893 
+M210.586914,153.143539 
+	C209.326218,150.486389 207.393738,148.846771 204.332291,149.760742 
+	C201.485748,150.610565 199.958099,152.632843 200.372742,155.735397 
+	C200.788742,158.848404 202.947479,160.604095 205.770294,160.400650 
+	C209.411560,160.138260 211.231247,157.695038 210.586914,153.143539 
+z" />
+                <path fill="currentColor" opacity="1.000000" stroke="none" d="
+M46.558823,142.128326 
+	C56.097157,139.349472 64.248138,143.508789 66.095390,151.742065 
+	C67.875114,159.674423 62.828461,167.131943 54.603573,168.723679 
+	C48.274281,169.948563 41.718754,166.244553 39.400711,160.133743 
+	C36.710472,153.041763 39.129562,146.696335 46.558823,142.128326 
+M48.102951,158.113525 
+	C51.190041,161.436066 54.337391,161.060349 56.755165,157.613602 
+	C58.828110,154.658447 57.585930,151.985077 54.636662,150.124008 
+	C52.860584,149.003235 51.148933,149.426132 49.557972,150.510422 
+	C46.952339,152.286194 46.749954,154.752869 48.102951,158.113525 
+z" />
+              </svg>
+
+              Stage Plotter
+            </button>
+            <span class="tb-status" id="status"></span>
+          </div>
         </div>
-
-        <div class="tb-divider auth-in" style="display:none;"></div>
-
-        <div class="tb-group">
-          <button id="btn-save-cloud" class="tb-btn tb-btn--cloud auth-in" style="display:none;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              style="width:14px;height:14px;">
-              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-              <polyline points="17 21 17 13 7 13 7 21" />
-              <polyline points="7 3 7 8 15 8" />
-            </svg>
-            Save to Cloud
-          </button>
-
-          <button id="btn-load-cloud" class="tb-btn tb-btn--cloud auth-in" style="display:none;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              style="width:14px;height:14px;">
-              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
-            </svg>
-            Manage Cloud
-          </button>
-
-          <button id="btn-stageplot" class="tb-btn tb-btn--stage auth-in" style="display:none;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-              style="width:14px;height:14px;">
-              <path d="M3 20h18" />
-              <path d="M6 20l1-9a5 5 0 0 1 10 0l1 9" />
-              <circle cx="12" cy="7" r="2" />
-            </svg>
-            Stage Plot
-          </button>
+        <!--Elements on the right-->
+        <div class="tb-right">
+          <!--Group containing premium button-->
+          <div class="tb-group auth-in">
+            <button id="btn-upgrade" class="tb-btn tb-btn--premium">Go Premium</button>
+          </div>
         </div>
-
-        <span class="tb-status" id="status"></span>
-
-        <div class="tb-divider auth-in" style="display:none;"></div>
-
-        <button id="btn-upgrade" class="tb-btn tb-btn--premium auth-in" style="display:none;">✨ Go Premium</button>
       </div>
     </div>
 
@@ -1687,13 +1947,8 @@
         <input class="search-input" id="gearSearch" placeholder="Search gear…" spellcheck="false">
         <div id="paletteRoot"></div>
         <div class="hint">
-          - Drag modules by their colored top bars. <br>
-          - Drag from jack-to-jack to connect. <br>
-          - Click on a cable to name or delete it. <br>
-          - Hold <b>Space bar + Drag mouse</b> or use <b>Middle Click</b> to pan on the canvas. <br>
-          - Log in or create account to export setups, upgrade to premium to save to the cloud. <br>
-          <br>
-          For support, raise an issue <a href="https://github.com/axelboi1234/Setup-Schematicizer">here</a>
+          Gear or feature ideas? Suggest features right <a
+            href="https://github.com/axelboi1234/Setup-Schematicizer/issues">here</a>.
         </div>
       </div>
 
@@ -1716,6 +1971,40 @@
   </div>
 
   <script>
+    //=================================================================
+    // TABLE OF CONTENTS
+    // Every major
+    // section in this file starts with a comment like
+    // "// === SECTION NAME ===" or "function someName(" — those are
+    // exactly what's listed here.
+    // ================================================================
+    //
+    //  WANT TO...                              SEARCH FOR THIS
+    //  ---------------------------------------------------------------
+    //  Show a popup (alert/confirm/form)    -> "const Dialog = "
+    //  Change the first-time welcome popup  -> "First-visit welcome popup"
+    //  Add/edit a gear CATEGORY             -> "const CATS = {"
+    //  Add/edit a piece of GEAR             -> "const GEAR = ["
+    //  Change what an icon looks like       -> "const ICON_SHAPES = {"
+    //  How a gear item gets placed down     -> "function addNode("
+    //  How gear modules get drawn on screen -> "function renderNodes()"
+    //  Zoom / pan behavior                  -> "Viewport Zoom & Pan"
+    //  Sidebar drag-and-drop                -> "Sidebar palette"
+    //  The "New"/Clear-canvas button        -> "New Workspace"
+    //  Import/export a setup as a JSON file -> "JSON Import / Export"
+    //  What loads when the page first opens -> "Initial Starter Rig"
+    //  Loading an old save back in          -> "function applyImportedState("
+    //  Premium / "Go Premium" button logic  -> "function checkPremiumStatus("
+    //  Sending someone to Stripe checkout   -> "function goToCheckout("
+    //  "Load from Cloud" popup              -> "Cloud rig manager modal"
+    //  The "Share" popup (link + people)    -> "Share settings modal"
+    //  Opening a rig someone shared w/ you  -> "Load a shared rig"
+    //  Returning from Stripe after payment  -> "Returning from Stripe"
+    //  Stage Plot: the gear list            -> "const STAGE_GEAR = ["
+    //  Stage Plot: everything else          -> "const StagePlot = "
+    //
+    // ================================================================
+
     // === Custom dialog system (replaces browser alert/confirm/prompt) ===
     // Dialog.alert(message, opts) -> Promise<void>
     // Dialog.confirm(message, opts) -> Promise<boolean>
@@ -1838,9 +2127,16 @@
         form(fields, opts = {}) {
           return open({ kicker: opts.kicker || '', title: opts.title || '', message: opts.message || '', fields, okText: opts.okText || 'Submit', cancelText: opts.cancelText || 'Cancel', showCancel: true, accent: opts.accent || 'instrument' });
         },
+
+        //Welcome popup
         welcome(opts = {}) {
           return open({ kicker: opts.kicker ?? 'WELCOME', title: opts.title || '', html: opts.html || '', okText: opts.okText || 'Got it', accent: opts.accent || 'instrument', wide: true });
         },
+        //Help popup
+        help(opts = {}) {
+          return open({ kicker: opts.kicker ?? 'Help', title: opts.title || '', html: opts.html || '', okText: opts.okText || 'Got it', accent: opts.accent || 'daw', wide: true });
+        },
+
         shareLink(url, opts = {}) {
           return open({
             kicker: opts.kicker ?? 'SHARE',
@@ -1871,10 +2167,10 @@
           <p>- Drag from jack-to-jack to connect. </p>
           <p>- Click on a cable to name or delete it.  </p>
           <p>- Hold <b>Space bar + Drag mouse</b> or use <b>Middle Click</b> to pan on the canvas. </p>
-          <p>- Log in or create account to export setups, upgrade to premium to save to the cloud. </p>
+          <p>- Log in or create account to export setups, upgrade to premium to save to the cloud and accesss the Stage Plotter. </p>
           <p></p>
-          <p>For support, raise an issue <a href="https://github.com/axelboi1234/Setup-Schematicizer">here</a></p>
-          <p>This information is accessable from the bottom of the sidebar</p>
+          <p>For support, raise an issue <a href="https://github.com/axelboi1234/Setup-Schematicizer/issues">here</a></p>
+          <p>This information is accessable from the help button</p>
           
         `
       });
@@ -1943,9 +2239,63 @@
       { cat: 'other', label: 'Custom Device', inPorts: [['', 'audio']], outPorts: [['', 'audio']] },
     ];
 
-    const GUITAR_SVG = `<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="0.5"><circle cx="17" cy="17" r="4.5" /><circle cx="13" cy="13" r="3.2" /><circle cx="14.5" cy="14.5" r="1.2" fill="white" stroke="none" /><line x1="11" y1="11" x2="5" y2="5" stroke-width="1.5" /><rect x="2.5" y="2.5" width="3" height="3" rx="0.5" transform="rotate(-45 4 4)" /><line x1="16" y1="19" x2="19" y2="16" stroke-width="1" /></svg>`;
+    // --- Dev tool: checks every GEAR entry for common mistakes ---------
+    // Runs automatically every time the page loads. If you add a new gear
+    // item and get a typo wrong (misspelled port type, missing bracket,
+    // wrong category name, etc.), this prints exactly which entry and
+    // which field is wrong to the browser console (F12 → Console tab) —
+    // instead of the app just silently breaking or behaving strangely
+    // with no clue why.
+    // You can also run it yourself any time by typing `validateGear()`
+    // in the console.
+    const VALID_PORT_TYPES = ['audio', 'midi', 'control'];
+    function validateGear() {
+      const problems = [];
+      const seenLabels = new Set();
 
-    //Create the icon shapes with a bunch of jibjab
+      GEAR.forEach((g, i) => {
+        const tag = `GEAR[${i}] ("${g.label || '(no label)'}")`;
+
+        if (!g.cat || !CATS[g.cat]) {
+          problems.push(`${tag} — cat is "${g.cat}", but that's not a real category. Must be one of: ${Object.keys(CATS).join(', ')}`);
+        }
+        if (!g.label || typeof g.label !== 'string') {
+          problems.push(`${tag} — missing a label (label must be a non-empty piece of text)`);
+        } else if (seenLabels.has(g.label)) {
+          problems.push(`${tag} — this exact label already exists elsewhere in GEAR. Duplicate entry?`);
+        } else {
+          seenLabels.add(g.label);
+        }
+
+        ['inPorts', 'outPorts'].forEach(key => {
+          if (!Array.isArray(g[key])) {
+            problems.push(`${tag} — ${key} should be a list like [['L','audio'],['R','audio']], but got: ${JSON.stringify(g[key])}`);
+            return;
+          }
+          g[key].forEach((port, pi) => {
+            if (!Array.isArray(port) || port.length !== 2) {
+              problems.push(`${tag} — ${key}[${pi}] should look like ['label', 'audio'] (exactly 2 things), but got: ${JSON.stringify(port)}`);
+              return;
+            }
+            const [, type] = port;
+            if (!VALID_PORT_TYPES.includes(type)) {
+              problems.push(`${tag} — ${key}[${pi}] has type "${type}", but it must be one of: ${VALID_PORT_TYPES.join(', ')}`);
+            }
+          });
+        });
+      });
+
+      if (problems.length) {
+        console.warn(`⚠️ validateGear() found ${problems.length} issue(s) in the GEAR list:`);
+        problems.forEach(p => console.warn('  • ' + p));
+      } else {
+        console.log(`✅ validateGear() checked ${GEAR.length} gear items — all good.`);
+      }
+      return problems;
+    }
+    validateGear();
+
+    //Create the svg icon shapes
     const ICON_SHAPES = {
 
       acousticdrumkit: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="6" cy="5" rx="3.5" ry="0.8" transform="rotate(-15 6 5)"/><line x1="6" y1="5.8" x2="6" y2="11"/><rect x="2" y="11" width="4" height="3" rx="0.5"/><line x1="4" y1="14" x2="4" y2="19"/><path d="M2.5 21l1.5-2 1.5 2"/><line x1="19" y1="4" x2="19" y2="19"/><line x1="16.5" y1="8.5" x2="21.5" y2="8.5"/><line x1="16.5" y1="10" x2="21.5" y2="10"/><path d="M17.5 21l1.5-2 1.5 2"/><rect x="11.5" y="6.5" width="4" height="2.5" rx="0.5"/><line x1="12.5" y1="9" x2="11.5" y2="10.8"/><circle cx="11.5" cy="15.5" r="4.5"/><circle cx="13.5" cy="16.5" r="1" fill="currentColor" stroke="none"/><path d="M8.2 18.5l-1.5 2.5 M14.8 18.5l1.5 2.5"/></svg>`,
@@ -1989,7 +2339,6 @@
 
     function iconSvg(n) {
       const key = ICON_BY_LABEL[n.label] || ICON_BY_CAT[n.cat] || 'other';
-      if (key === 'guitar') return GUITAR_SVG;
       return ICON_SHAPES[key] || ICON_SHAPES.other;
     }
 
@@ -2037,7 +2386,7 @@
 
     function updateTransform() {
       canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
-      zoomLevelEl.textContent = `${Math.round(zoom * 100)}%`;
+      zoomLevelEl.textContent = `${Math.round(zoom * 100)}% `;
     }
 
     function nextPosition() {
@@ -2122,14 +2471,14 @@
       n.inPorts.forEach((p, i) => {
         const y = hOffset + ROW_H * (i + 0.5);
         const cls = p.type === 'midi' ? ' midi' : (p.type === 'control' ? ' control' : '');
-        html += `<div class="port in${cls}" data-port-in="${n.id}" data-in-idx="${i}" style="top:${y}px"></div>`;
-        if (!skipLabels) html += `<input class="port-label in" data-portlabel-in="${n.id}" data-portlabel-idx="${i}" value="${esc(p.label)}" style="top:${y}px" placeholder="${p.type === 'midi' ? 'MIDI' : (p.type === 'control' ? 'CTL' : '')}" spellcheck="false">`;
+        html += `<div class="port in${cls}" data-port-in="${n.id}" data-in-idx="${i}" style = "top:${y}px" ></div > `;
+        if (!skipLabels) html += `<input class="port-label in" data-portlabel-in="${n.id}" data-portlabel-idx="${i}" value = "${esc(p.label)}" style = "top:${y}px" placeholder = "${p.type === 'midi' ? 'MIDI' : (p.type === 'control' ? 'CTL' : '')}" spellcheck = "false"> `;
       });
       n.outPorts.forEach((p, i) => {
         const y = hOffset + ROW_H * (i + 0.5);
         const cls = p.type === 'midi' ? ' midi' : (p.type === 'control' ? ' control' : '');
-        html += `<div class="port out${cls}" data-port-out="${n.id}" data-out-idx="${i}" style="top:${y}px"></div>`;
-        if (!skipLabels) html += `<input class="port-label out" data-portlabel-out="${n.id}" data-portlabel-idx="${i}" value="${esc(p.label)}" style="top:${y}px" placeholder="${p.type === 'midi' ? 'MIDI' : (p.type === 'control' ? 'CTL' : '')}" spellcheck="false">`;
+        html += `<div class="port out${cls}" data-port-out="${n.id}" data-out-idx="${i}" style = "top:${y}px" ></div > `;
+        if (!skipLabels) html += `<input class="port-label out" data-portlabel-out="${n.id}" data-portlabel-idx="${i}" value = "${esc(p.label)}" style = "top:${y}px" placeholder = "${p.type === 'midi' ? 'MIDI' : (p.type === 'control' ? 'CTL' : '')}" spellcheck = "false"> `;
       });
       return html;
     }
@@ -2145,8 +2494,8 @@
         const isDaw = n.cat === 'daw';
 
         const nameHtml = nameEditable
-          ? `<input class="node-label" data-label="${n.id}" value="${esc(n.label)}" title="${esc(n.label)}" spellcheck="false">`
-          : `<div class="node-label static" title="${esc(n.label)}">${esc(n.label)}</div>`;
+          ? `<input class="node-label" data-label="${n.id}" value = "${esc(n.label)}" title = "${esc(n.label)}" spellcheck = "false">`
+          : `<div class="node-label static" title = "${esc(n.label)}" > ${esc(n.label)}</div>`;
 
         let ioHtml = '';
         if (adjustable && showTypePick) {
@@ -2173,7 +2522,7 @@
               <option value="control"${outSel.control ? ' selected' : ''}>Ctl</option>
             </select>
           </div>
-        </div>`;
+        </div > `;
         } else if (adjustable) {
           ioHtml = `<div class="io-controls">
           <div class="io-row"><span>IN</span>
@@ -2186,11 +2535,11 @@
             <b>${n.outPorts.length}</b>
             <button data-step-id="${n.id}" data-step-io="out" data-step-delta="1">+</button>
           </div>
-        </div>`;
+        </div > `;
         }
 
         const routingHtml = isDaw ? `<div class="routing">
-        <div class="routing-title">Internal Routing Matrix</div>
+      <div class="routing-title">Internal Routing Matrix</div>
         ${n.inPorts.map((p, i) => `<div class="routing-row"><span class="routing-tag">IN ${i + 1}</span><input data-portlabel-in="${n.id}" data-portlabel-idx="${i}" value="${esc(p.label)}" placeholder="label" spellcheck="false"></div>`).join('')}
         ${n.outPorts.map((p, i) => `<div class="routing-row routing-row-out">
             <div class="routing-row-top"><span class="routing-tag">OUT ${i + 1}</span><input data-portlabel-out="${n.id}" data-portlabel-idx="${i}" value="${esc(p.label)}" placeholder="label" spellcheck="false"></div>
@@ -2198,8 +2547,9 @@
               <option value=""${p.source == null ? ' selected' : ''}>— source: disconnected —</option>
               ${n.inPorts.map((ip, j) => `<option value="${j}"${p.source === j ? ' selected' : ''}>${esc(describeDawInput(n, j))}</option>`).join('')}
             </select>
-          </div>`).join('')}
-      </div>` : '';
+          </div>`).join('')
+          }
+      </div > ` : '';
 
         const el = document.createElement('div');
         el.className = 'node';
@@ -2208,7 +2558,7 @@
         el.style.setProperty('--nc', `var(--${n.cat})`);
         el.dataset.id = n.id;
         el.innerHTML = `
-      <div class="node-bar" data-drag="${n.id}"></div>
+      <div class="node-bar" data-drag="${n.id}" ></div>
       <div class="screw tl"></div><div class="screw tr"></div><div class="screw bl"></div><div class="screw br"></div>
       <button class="node-del" data-del="${n.id}">×</button>
       <div class="node-body">
@@ -2238,7 +2588,7 @@
     }
     function cableD(p1, p2) {
       const dx = Math.max(46, Math.abs(p2.x - p1.x) * 0.5);
-      return `M ${p1.x} ${p1.y} C ${p1.x + dx} ${p1.y}, ${p2.x - dx} ${p2.y}, ${p2.x} ${p2.y}`;
+      return `M ${p1.x} ${p1.y} C ${p1.x + dx} ${p1.y}, ${p2.x - dx} ${p2.y}, ${p2.x} ${p2.y} `;
     }
     function cableMid(p1, p2) { return { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 }; }
 
@@ -2247,14 +2597,14 @@
       state.connections.forEach(c => {
         const p1 = getPortPos(c.from, 'out', c.fromIdx), p2 = getPortPos(c.to, 'in', c.toIdx);
         const d = cableD(p1, p2), cv = cableColorVar(c), sel = c.id === selectedCableId;
-        html += `<path class="cable-hit" data-cable="${c.id}" d="${d}"/>`;
-        html += `<path class="cable${sel ? ' selected' : ''}" data-cable="${c.id}" d="${d}" style="stroke:var(--${cv})"/>`;
-        html += `<circle class="cap" cx="${p1.x}" cy="${p1.y}" r="4.5" style="fill:var(--${cv})" stroke="#1c1a17" stroke-width="1"/>`;
-        html += `<circle class="cap" cx="${p2.x}" cy="${p2.y}" r="4.5" style="fill:var(--${cv})" stroke="#1c1a17" stroke-width="1"/>`;
+        html += `<path class="cable-hit" data-cable="${c.id}" d = "${d}" /> `;
+        html += `<path class="cable${sel ? ' selected' : ''}" data-cable="${c.id}" d = "${d}" style = "stroke:var(--${cv})"/> `;
+        html += `<circle class="cap" cx = "${p1.x}" cy = "${p1.y}" r = "4.5" style = "fill:var(--${cv})" stroke = "#1c1a17" stroke-width="1"/> `;
+        html += `<circle class="cap" cx = "${p2.x}" cy = "${p2.y}" r = "4.5" style = "fill:var(--${cv})" stroke = "#1c1a17" stroke-width="1"/> `;
         if (c.label) {
           const mid = cableMid(p1, p2);
           const w = Math.max(26, c.label.length * 5.8 + 12);
-          html += `<g class="cable-tag" transform="translate(${mid.x - w / 2},${mid.y - 9})"><rect width="${w}" height="16" rx="8" style="fill:var(--panel);stroke:var(--${cv})" stroke-width="1"/><text x="${w / 2}" y="11.5" text-anchor="middle" font-size="9.5" font-family="'JetBrains Mono',monospace" style="fill:var(--${cv})">${esc(c.label)}</text></g>`;
+          html += `<g class="cable-tag" transform = "translate(${mid.x - w / 2},${mid.y - 9})" ><rect width="${w}" height="16" rx="8" style="fill:var(--panel);stroke:var(--${cv})" stroke-width="1"/><text x="${w / 2}" y="11.5" text-anchor="middle" font-size="9.5" font-family="'JetBrains Mono',monospace" style="fill:var(--${cv})">${esc(c.label)}</text></g> `;
         }
       });
       svg.innerHTML = html;
@@ -2265,7 +2615,7 @@
         const mid = cableMid(p1, p2);
         const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         g.setAttribute('class', 'cable-del'); g.style.pointerEvents = 'auto';
-        g.innerHTML = `<circle cx="${mid.x + 16}" cy="${mid.y - 16}" r="9" fill="#c9615f" stroke="#1c1a17" stroke-width="1.3"/><text x="${mid.x + 16}" y="${mid.y - 12.5}" text-anchor="middle" font-size="11" fill="#1c1a17" font-family="Inter, sans-serif">×</text>`;
+        g.innerHTML = `<circle cx = "${mid.x + 16}" cy = "${mid.y - 16}" r = "9" fill = "#c9615f" stroke = "#1c1a17" stroke-width="1.3" /> <text x="${mid.x + 16}" y="${mid.y - 12.5}" text-anchor="middle" font-size="11" fill="#1c1a17" font-family="Inter, sans-serif">×</text>`;
         g.addEventListener('mousedown', (e) => { e.stopPropagation(); deleteConnection(selectedCableId); });
         svg.appendChild(g);
         showCableLabelInput(sel, mid);
@@ -2390,7 +2740,7 @@
         x = Math.max(0, Math.min(4000 - NODE_W, x));
         y = Math.max(0, Math.min(4000 - nodeHeightOf(dragNode), y));
         dragNode.x = x; dragNode.y = y;
-        const el = canvas.querySelector(`.node[data-id="${dragNode.id}"]`);
+        const el = canvas.querySelector(`.node[data-id= "${dragNode.id}"]`);
         if (el) { el.style.left = x + 'px'; el.style.top = y + 'px'; }
         renderCables();
       } else if (pendingConn) {
@@ -2502,12 +2852,12 @@
       const root = document.getElementById('paletteRoot');
       root.innerHTML = CAT_ORDER.map(cat => {
         const items = GEAR.map((g, idx) => ({ g, idx })).filter(x => x.g.cat === cat).map(({ g, idx }) =>
-          `<button class="palette-item" draggable="true" style="--nc:var(--${cat})" data-idx="${idx}" data-search="${esc(g.label.toLowerCase())}">${esc(g.label)}</button>`
+          ` <button class="palette-item" draggable = "true" style = "--nc:var(--${cat})" data-idx="${idx}" data-search="${esc(g.label.toLowerCase())}" > ${esc(g.label)}</button> `
         ).join('');
-        return `<details class="cat-group" open data-cat="${cat}">
+        return `<details class="cat-group" data-cat="${cat}">
       <summary><span class="swatch" style="background:var(--${cat})"></span>${esc(CATS[cat].label)}</summary>
       ${items}
-    </details>`;
+    </details> `;
       }).join('');
     }
     buildSidebar();
@@ -2569,7 +2919,7 @@
 
     // --- Legend ---
     document.getElementById('legend').innerHTML =
-      CAT_ORDER.map(cat => `<span><i class="swatch" style="background:var(--${cat})"></i>${esc(CATS[cat].label)}</span>`).join('')
+      CAT_ORDER.map(cat => `<span> <i class="swatch" style="background:var(--${cat})"></i>${esc(CATS[cat].label)}</span> `).join('')
 
     // --- New Workspace ---
     document.getElementById('newBtn').addEventListener('click', async () => {
@@ -2580,15 +2930,33 @@
       state = { nodes: [], connections: [] };
       selectedCableId = null;
       panX = 0; panY = 0; zoom = 1.0;
-      document.getElementById('setupName').value = 'Untitled setup';
+      document.getElementById('setupName').value = 'Untitled Setup';
       render();
     });
 
     // --- JSON Import / Export Storage Engine (No external web dependency) ---
     function slugify(s) { return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'setup'; }
 
+    //Help button
+    document.getElementById('helpBtn').addEventListener('click', () => {
+      Dialog.help({
+        title: 'Help',
+        html:
+          `
+      <p> - Drag modules by their colored top bars. </p>
+          <p>- Drag from jack-to-jack to connect. </p>
+          <p>- Click on a cable to name or delete it.  </p>
+          <p>- Hold <b>Space bar + Drag mouse</b> or use <b>Middle Click</b> to pan on the canvas. </p>
+          <p>- Log in or create account to export setups, upgrade to premium to save to the cloud and accesss the Stage Plotter.</p>
+          <p></p>
+          <p>For support, raise an issue <a href="https://github.com/axelboi1234/Setup-Schematicizer/issues">here</a></p>
+    `
+      });
+    });
+
+    //Export button
     document.getElementById('exportBtn').addEventListener('click', () => {
-      const name = document.getElementById('setupName').value.trim() || 'Untitled setup';
+      const name = document.getElementById('setupName').value.trim() || 'Untitled Setup';
       const payload = {
         name,
         nodes: state.nodes,
@@ -2608,6 +2976,7 @@
       setStatus('Exported setup successfully!');
     });
 
+    //Import button
     document.getElementById('importBtn').addEventListener('click', () => {
       document.getElementById('fileImporter').click();
     });
@@ -2661,7 +3030,7 @@
       const m = addNode(find('Behringer Xenyx 1002B'));
       const i = addNode(find('Focusrite Scarlett 2i2'));
       const d = addNode(find('Computer / DAW'));
-
+ 
       // Distribute starter nodes smoothly across wider plane coordinates
       state.nodes[0].x = 80; state.nodes[0].y = 120;
       state.nodes[1].x = 360; state.nodes[1].y = 120;
@@ -2669,7 +3038,7 @@
       state.nodes[3].x = 640; state.nodes[3].y = 120;
       state.nodes[4].x = 920; state.nodes[4].y = 120;
       state.nodes[5].x = 1200; state.nodes[5].y = 120;
-
+ 
       state.connections.push(
         { id: 'c' + (idCounter++), from: g, fromIdx: 0, to: l, toIdx: 0, label: '' },
         { id: 'c' + (idCounter++), from: fs, fromIdx: 0, to: l, toIdx: 2, label: '' },
@@ -2817,7 +3186,7 @@
       }
     });
 
-    // 6. Sign up / sign in — one form dialog instead of two chained prompts
+    //Sign up / sign in — one form dialog instead of two chained prompts
     document.getElementById('btn-signup').addEventListener('click', async () => {
       const result = await Dialog.form([
         { key: 'email', label: 'Email', type: 'email', placeholder: 'you@example.com', autocomplete: 'email' },
@@ -2872,7 +3241,7 @@
 
       let saveError;
       if (existing) {
-        const ok = await Dialog.confirm(`A saved rig named "${rigName}" already exists. Overwrite it?`, { title: 'Overwrite existing save?', okText: 'Overwrite' });
+        const ok = await Dialog.confirm(`A saved rig named "${rigName}" already exists.Overwrite it ? `, { title: 'Overwrite existing save?', okText: 'Overwrite' });
         if (!ok) return false;
         const { error } = await supabaseClient.from('rigs').update({ data: rigDataStructure }).eq('id', existing.id);
         saveError = error;
@@ -2945,7 +3314,7 @@
         overlay = document.createElement('div');
         overlay.className = 'dlg-overlay rig-overlay';
         overlay.innerHTML = `
-          <div class="dlg-box rig-box" role="dialog" aria-modal="true">
+      <div class="dlg-box rig-box" role = "dialog" aria-modal="true">
             <div class="dlg-bar" style="background:var(--daw)"></div>
             <div class="dlg-body">
               <div class="dlg-kicker" style="color:var(--daw)">CLOUD STORAGE</div>
@@ -2955,7 +3324,7 @@
                 <button class="btn" data-rig-close>Close</button>
               </div>
             </div>
-          </div>`;
+          </div > `;
         document.body.appendChild(overlay);
         listEl = overlay.querySelector('.rig-list');
 
@@ -2988,11 +3357,11 @@
       }
 
       async function refresh() {
-        listEl.innerHTML = `<div class="rig-empty">Loading…</div>`;
+        listEl.innerHTML = `<div class="rig-empty" > Loading…</div> `;
         const { rigs, error } = await loadUserRigs();
 
         if (error) {
-          listEl.innerHTML = `<div class="rig-empty">Couldn't load your saved rigs: ${esc(error.message)}</div>`;
+          listEl.innerHTML = `<div class="rig-empty" > Couldn't load your saved rigs: ${esc(error.message)}</div>`;
           return;
         }
         if (!rigs.length) {
@@ -3004,7 +3373,7 @@
         listEl.innerHTML = rigs.map(r => `
           <div class="rig-item">
             <div class="rig-item-info">
-              <div class="rig-item-name">${esc(r.name || 'Untitled setup')}${r.is_public ? '<span class="rig-public-badge">● public</span>' : ''}${!r.isOwner ? '<span class="rig-public-badge">● shared with you</span>' : ''}</div>
+              <div class="rig-item-name">${esc(r.name || 'Untitled Setup')}${r.is_public ? '<span class="rig-public-badge">● public</span>' : ''}${!r.isOwner ? '<span class="rig-public-badge">● shared with you</span>' : ''}</div>
               <div class="rig-item-meta">${r.created_at ? new Date(r.created_at).toLocaleString() : ''}</div>
             </div>
             <div class="rig-item-actions">
@@ -3226,7 +3595,7 @@
         return;
       }
       applyImportedState(data.data, data.name);
-      setStatus('Loaded shared setup "' + (data.name || 'Untitled setup') + '".');
+      setStatus('Loaded shared setup "' + (data.name || 'Untitled Setup') + '".');
     })();
 
     //Returning from Stripe checkout
@@ -3247,7 +3616,7 @@
 
     //PAYWALL CHECK TRIGGER LINK
     document.getElementById('btn-save-cloud').addEventListener('click', async () => {
-      const name = document.getElementById('setupName').value.trim() || 'Untitled setup';
+      const name = document.getElementById('setupName').value.trim() || 'Untitled Setup';
       const payload = { name, nodes: state.nodes, connections: state.connections, idCounter, zoom, panX, panY };
       await saveRigToCloud(name, payload);
     });
@@ -3260,6 +3629,8 @@
       const { data: { user } } = await supabaseClient.auth.getUser();
       goToCheckout(user);
     });
+
+
 
     // Stage Plot (premium feature)
     /* 
@@ -3282,6 +3653,7 @@
       performer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3"/><path d="M6 21v-4a6 6 0 0 1 12 0v4"/></svg>`
     };
 
+    //Specify type (similar to category), which will assign the icon, ten the name.
     const STAGE_GEAR = [
       { type: 'vocalmic', label: 'Vocal Mic' },
       { type: 'instmic', label: 'Instrument Mic' },
@@ -3299,6 +3671,8 @@
 
     const StagePlot = (() => {
       let overlay, surfaceEl;
+
+      //State of the stage, whether snap and/or grid are on, the size, and the items stored on the canvas
       let stageState = { widthM: 8, depthM: 5, grid: true, snap: true, items: [] };
       let idCounter = 1;
       let dragItem = null, dragStart = null;
@@ -3314,16 +3688,17 @@
               <h2>Stage Plotter</h2>
               <div class="tb-divider"></div>
               <div class="tb-group">
-                <span class="stage-dim-label">Stage</span>
+                <span class="stage-dim-label">Size</span>
                 <input type="number" min="2" max="40" class="stage-dim-input" id="stageWidthInput" value="${stageState.widthM}">
                 <span class="stage-dim-x">×</span>
                 <input type="number" min="2" max="40" class="stage-dim-input" id="stageDepthInput" value="${stageState.depthM}">
-                <span class="stage-dim-label">m</span>
+                <span class="stage-dim-x" style="margin-right:10px;">m</span>
               </div>
-              <div class="tb-divider"></div>
+              <div class="tb-divider" style="margin-right:10px;"></div>
               <button type="button" class="stage-toggle" id="stageGridToggle" data-active="true" aria-pressed="true"><span class="stage-toggle-box"><svg viewBox="0 0 24 24" fill="none" stroke="var(--monitor)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg></span>Grid</button>
               <button type="button" class="stage-toggle" id="stageSnapToggle" data-active="true" aria-pressed="true"><span class="stage-toggle-box"><svg viewBox="0 0 24 24" fill="none" stroke="var(--monitor)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg></span>Snap</button>
               <div class="spacer"></div>
+              <button class="tb-btn" id="stageClearBtn"">Clear</button>
               <button class="tb-btn" id="stageExportBtn">Export PNG</button>
               <button class="stage-close" id="stageCloseBtn" aria-label="Close">×</button>
             </div>
@@ -3379,7 +3754,12 @@
           snapToggleEl.dataset.active = String(stageState.snap);
           snapToggleEl.setAttribute('aria-pressed', String(stageState.snap));
         });
+
+        //Listens for a click to occur on the button, then exports a PNG of the stage
         overlay.querySelector('#stageExportBtn').addEventListener('click', exportPNG);
+
+        //Listens for a click to occur on the button, then deletes all items on the stage
+        overlay.querySelector('#stageClearBtn').addEventListener('click', deleteAllStageItems);
 
         buildPalette();
         overlay.querySelector('#stageSearch').addEventListener('input', (e) => {
@@ -3408,6 +3788,7 @@
         });
       }
 
+      //Creates an item on the stage
       function buildPalette() {
         const root = overlay.querySelector('#stagePaletteRoot');
         root.innerHTML = STAGE_GEAR.map((g, idx) => `
@@ -3441,6 +3822,7 @@
         renderSurface();
       }
 
+      //"Refreshes" the stage plot canvas
       function renderSurface() {
         const w = stageState.widthM * STAGE_PX_PER_M;
         const h = stageState.depthM * STAGE_PX_PER_M;
@@ -3481,7 +3863,7 @@
           if (rotBtn) {
             const it = stageState.items.find(it => it.id === rotBtn.dataset.stageRot);
             if (it) {
-              it.rot = (it.rot + 45) % 360;
+              it.rot = (it.rot + 45);
               const inner = surfaceEl.querySelector(`.stage-item[data-id="${it.id}"] .stage-item-icon-inner`);
               if (inner) inner.style.transform = `rotate(${it.rot}deg)`;
             }
@@ -3519,6 +3901,22 @@
           const it = stageState.items.find(it => it.id === e.target.dataset.stageLabel);
           if (it) it.label = e.target.value;
         });
+      }
+
+      //A function for deleting all items on the stage and setting stage sixe to the default 8x5 meters
+      async function deleteAllStageItems() {
+        //Set the stage size to 8x5
+        stageState.widthM = 8;
+        stageState.depthM = 5;
+
+        //Then "refresh" the buttons
+        overlay.querySelector('#stageWidthInput').value = stageState.widthM;
+        overlay.querySelector('#stageDepthInput').value = stageState.depthM;
+
+        //Clear the array containing the items on the stage
+        stageState.items.length = 0;
+        renderSurface();
+        return;
       }
 
       function open() {
@@ -3582,7 +3980,11 @@
         img.src = url;
       }
 
-      return { open, close };
+      // Dev tool: type StagePlot.debugState() in the browser console
+      // (F12 → Console tab) to see the raw list of everything currently
+      // placed on the stage — handy for checking positions/labels/rotation
+      // without having to click each item one by one.
+      return { open, close, debugState: () => stageState };
     })();
 
     document.getElementById('btn-stageplot').addEventListener('click', async () => {
