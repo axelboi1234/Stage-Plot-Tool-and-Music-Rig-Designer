@@ -2,12 +2,10 @@
 <html lang="en">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-	
-<script src="https://app.secureprivacy.ai/script/6a7ae0f3892dbe7b98589ddb.js"></script>
 
 <head>
   <meta charset="UTF-8">
-  <title>Setup Schematicizer</title>
+  <title>Setup Schematicizer | Stage Plot Tool & Music Rig Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
@@ -1634,16 +1632,6 @@
     }
   </style>
 </head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B33LVE1P2K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-B33LVE1P2K');
-</script>
 
 <body>
   <div class="app">
@@ -3276,7 +3264,7 @@ z" />
         return false;
       }
 
-      await Dialog.alert('Your setup has been saved to the cloud!', { kicker: 'SUCCESS', title: 'Setup Saved', accent: 'daw' });
+      await Dialog.alert('Your setup has been saved!', { kicker: 'SUCCESS', title: 'Setup Saved', accent: 'daw' });
       return true;
     }
 
@@ -3419,11 +3407,11 @@ z" />
       }
 
       async function removeRig(id) {
-        const ok = await Dialog.confirm('This will permanently delete this saved rig from the cloud.', { title: 'Delete this rig?', okText: 'Delete' });
+        const ok = await Dialog.confirm('This will permanently delete this saved rig', { title: 'Delete This Rig?', okText: 'Delete' });
         if (!ok) return;
         const { error } = await supabaseClient.from('rigs').delete().eq('id', id);
         if (error) {
-          await Dialog.alert('Could not delete: ' + error.message, { kicker: 'ERROR', title: 'Delete failed', accent: 'danger' });
+          await Dialog.alert('Could not delete: ' + error.message, { kicker: 'ERROR', title: 'Delete Failed', accent: 'danger' });
           return;
         }
         await refresh();
@@ -3655,6 +3643,7 @@ z" />
     const STAGE_ICONS = {
       vocalmic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9.5" y="2.5" width="5" height="8" rx="2.5"/><path d="M7 9.5a5 5 0 0 0 10 0"/><line x1="12" y1="14.5" x2="12" y2="18"/><line x1="8.5" y1="21" x2="15.5" y2="21"/></svg>`,
       instmic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="10.3" y="3" width="4.6" height="8" rx="2.3" transform="rotate(35 12.6 7)"/><line x1="9" y1="12" x2="4" y2="18"/><circle cx="4" cy="19.5" r="1" fill="currentColor" stroke="none"/></svg>`,
+      pedalboard: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="12" rx="2"/><rect x="4" y="9" width="5" height="8" rx="1"/><circle cx="6.5" cy="11.5" r="0.8"/><circle cx="6.5" cy="15.5" r="1.2"/><rect x="10.5" y="9" width="5" height="8" rx="1"/><circle cx="13" cy="11.5" r="0.8"/><circle cx="13" cy="15.5" r="1.2"/><rect x="17" y="9" width="5" height="8" rx="1"/><circle cx="19.5" cy="11.5" r="0.8"/><circle cx="19.5" cy="15.5" r="1.2"/></svg>`,
       di: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="9" rx="1.5"/><line x1="6" y1="12.5" x2="18" y2="12.5"/><circle cx="8.5" cy="12.5" r="1"/><circle cx="15.5" cy="12.5" r="1"/></svg>`,
       wedge: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17V9l18-5v13z"/><circle cx="11" cy="12" r="3"/></svg>`,
       sidefill: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="1.5"/><circle cx="12" cy="8" r="2.6"/><circle cx="12" cy="16" r="1.8"/></svg>`,
@@ -3669,6 +3658,7 @@ z" />
     const STAGE_GEAR = [
       { type: 'vocalmic', label: 'Vocal Mic' },
       { type: 'instmic', label: 'Instrument Mic' },
+      { type: 'pedalboard', label: 'Pedal Board'},
       { type: 'di', label: 'DI Box' },
       { type: 'wedge', label: 'Monitor' },
       { type: 'sidefill', label: 'Side Fill' },
